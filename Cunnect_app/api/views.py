@@ -1,5 +1,4 @@
-
-from .models import UserProfile, User, Posts
+from .models import UserProfile, User, Posts, Comment, Likes
 from django.contrib.auth import login
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
@@ -10,7 +9,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 from knox.models import AuthToken
 from knox.auth import TokenAuthentication
-from .serializer import UserSerializer, UserProfileSerializer, RegisterSerializer, LoginSerializer, PostSerializer
+from .serializer import UserSerializer, UserProfileSerializer, RegisterSerializer, LoginSerializer, PostSerializer, CommentSerializer, LikeSerializer
 import re
 
 
@@ -25,22 +24,15 @@ class UserProfileViewSet(viewsets.ModelViewSet): #This line of code defines a cl
 
 #CUNY student register viewset
 class RegisterViewset(viewsets.ModelViewSet):
-    serializer_class = RegisterSerializer 
-    queryset = User.objects.all() #This line of code sets the initial queryset for the RegisterViewset to include all user accounts in the database.
-    permission_classes = [permissions.AllowAny] # sets the permissions for who can access the RegisterViewset to be "allow any", which means that anyone can register as a new user.
-    def create(self, request): #function handles the creation of new user accts
-        serializer = RegisterSerializer(data = request.data) # creates a new instance of the RegisterSerializer class using the request data that was submitted when the user registered.
+    serializer_class = RegisterSerializer
+    queryset = User.objects.all()
+    permission_classes = [permissions.AllowAny]
 
-        if serializer.is_valid():
-            user = serializer.save() #saves the new user account to the database.
-
-            #return Response(serializer.data, status=status.HTTP_201_CREATED)
-            return Response({
-            "user": UserSerializer(user, context=self.get_serializer_context()).data, #
-            "token": AuthToken.objects.create(user)[1]
-        })
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 #login viewset
 
@@ -74,4 +66,14 @@ class LogoutViewSet(viewsets.ModelViewSet):
 class Posts(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Posts.objects.all()
-    permission_classes = [permissions.AllowAny]
+    
+
+#Comment viewset
+class Comment(viewsets.ModelViewSet):
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()
+
+#Likes viewset
+class Likes(viewsets.ModelViewSet):
+    serializer_class = LikeSerializer
+    queryset = Likes.objects.all()
