@@ -14,51 +14,22 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['cuny_email', 'first_name', 'last_name', 'major', 'CUNY', 'graduation_year', 'birth_date']
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
-    confirm_password = serializers.CharField(style = {'input_type':'password'}, write_only = True)
+    confirm_password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-        fields = ['username','first_name', 'last_name', 'cuny_email', 'password', 'confirm_password', 'major', 'CUNY', 'graduation_year', 'birth_date']
-        extra_kwargs = {
-            'password': {'write_only': True}
-        }
+        fields = ['username', 'first_name', 'last_name', 'cuny_email', 'password', 'confirm_password', 'major', 'CUNY', 'graduation_year', 'birth_date']
+        extra_kwargs = {'password': {'write_only': True}}
 
-    def save(self):
-        user = User(
-            username = self.validated_data['username'],
-            first_name = self.validated_data['first_name'],
-            last_name = self.validated_data['last_name'],
-            cuny_email = self.validated_data['cuny_email'],
-            major = self.validated_data['major'],
-            CUNY = self.validated_data['CUNY'],
-            graduation_year = self.validated_data['graduation_year'],
-            birth_date = self.validated_data['birth_date']
-            )
-        password = self.validated_data['password']
-        confirm_password = self.validated_data['confirm_password'] 
-        
-    
-        if not re.search(r'\.cuny\.edu$', self.validated_data.get('cuny_email')):
-            raise serializers.ValidationError("Must use a CUNY email to register")
-        
-
-        if password != confirm_password:
+    def validate(self, data):
+        if data['password'] != data['confirm_password']:
             raise serializers.ValidationError({'password': 'Passwords must match.'})
-        
-        user.set_password(password)
-        user.save()
-        
-        profile = UserProfile(
-            user=user,
-            #cuny_email=self.validated_data['cuny_email'],
-            major=self.validated_data.get('major'),
-            CUNY=self.validated_data.get('CUNY'),
-            birth_date=self.validated_data.get('birth_date')
-        )
-        
-        profile.save()
+        return data
+
+    def create(self, validated_data):
+        validated_data.pop('confirm_password')
+        user = User.objects.create_user(**validated_data)
         return user
-    
 #login serializer
 class LoginSerializer(serializers.Serializer): #inherits from the serializers.Serializer class.
     username = serializers.CharField() # these lines define the fields that are expected in the input data when the serializer is used, 
@@ -87,12 +58,17 @@ class PostSerializer(serializers.ModelSerializer):
     comments = serializers.SerializerMethodField()
     num_likes = serializers.SerializerMethodField()
     users_who_liked = serializers.SerializerMethodField()
+    users_first_name = serializers.SerializerMethodField()
+    image = serializers.ImageField(required=False)
     class Meta:
         model = Posts
-        fields = ['user', 'image', 'caption', 'date_created', 'num_likes', 'comments', 'users_who_liked']
+        fields = ['user', 'users_first_name','image', 'caption', 'date_created', 'num_likes', 'comments', 'users_who_liked']
     #self represents the specific instance of the postserializer class thats being used to serialize a post object
     #obj represents the specific instance of the post model that is being serialized
     #the function num_likes returns the number of likes of a specific post instance by calling the num_likes function in the post model
+    def get_users_first_name(self, obj):
+        return obj.user_first_name()
+    
     def get_num_likes(self, obj):
         return obj.num_likes()
     

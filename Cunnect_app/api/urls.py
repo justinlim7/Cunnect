@@ -10,6 +10,8 @@ router.register(r'Register', views.RegisterViewset)
 router.register(r'Login,', views.LoginAPI, basename='login')
 router.register(r'Posts', views.Posts, basename= 'Posts')
 router.register(r'Logout', views.LogoutViewSet, basename= 'Logout')
+router.register(r'Comment', views.Comment, basename= 'Comment')
+router.register(r'Likes', views.Likes, basename = 'Likes')
 #router.register(r'RegisterView', views.RegisterView)
 
 #python list of paths we can access

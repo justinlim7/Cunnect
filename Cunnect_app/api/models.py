@@ -44,9 +44,12 @@ class Posts(models.Model):
     #write the fields for column names
     #user = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='post_image', blank=True, null=True )
+    image = models.ImageField(upload_to='post_images', max_length=10000, null=True, blank=True)
     caption = models.TextField(max_length=500)
     date_created = models.DateTimeField(default=datetime.now)
+
+    def user_first_name(self):
+        return self.user.first_name + " " + self.user.last_name
     
     def __str__(self): #self refers to the instance of the specific post model
         return self.caption
@@ -70,7 +73,7 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE) #the user making the comment
     text = models.CharField(max_length = 100) #the comment made on the post
     created_at = models.DateTimeField(auto_now_add = True)
-
-
+    def __str__(self):
+        return self.text
 
         
