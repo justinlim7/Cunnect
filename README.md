@@ -4,7 +4,8 @@ This is a social network application made specifically for CUNY students.
 The primary purpose of the social network is to provide a bridge of communication or connection for CUNY students. Our goal is to transform CUNY into a more social environemnt by creating a place for students to start building genuine connections with their fellow classmates.
 
 
-There are two codebases for this project. One using Django's REST Framework for our backend and another using Swift for our UI. This repository holds the Django portion (https://github.com/justinlim7/Cunnect_app/tree/master) and here is where you can find the Swift portion: 
+There are two codebases for this project. One using Django's REST Framework for our backend and another using Swift for our UI. This repository holds the Django portion (https://github.com/justinlim7/Cunnect_app/tree/master) and here is where you can find the Swift portion: https://github.com/upashna9/Cunnect_UI
+
 
 NOTE:
 If you wish to simulate what our app looks like, the most reliable way is to use Xcode available primarily through Mac/macOS. 
@@ -31,7 +32,7 @@ the following url to a backend server will be in the terminal
  
  
  
- Frontend Overview (upashna9-UI Branch):
+ Frontend Overview (upashna9-UI Repo):
  Our frontend is built using Swift & Xcode. These technologies are required to run our app as shown in the demo. In addition, the django backend server must be running at the same time.
  
  In order to access our apps functionalities you must run a build in Xcode for each swift file.
