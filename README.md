@@ -26,3 +26,21 @@ the following url to a backend server will be in the terminal
  http://127.0.0.1:8000/
  clicking this url will take you to our backend server and allow you to access it and its endpoints.
  This backend must be currently running for the frontend on Xcode to successfully build.
+ 
+ 
+ 
+ 
+ 
+ Frontend Overview:
+ Our frontend is built using Swift & Xcode. These technologies are required to run our app as shown in the demo. In addition, the django backend server must be running at the same time.
+ 
+ In order to access our apps functionalities you must run a build in Xcode for each swift file.
+ 
+ Registering a User
+ RegistrationView.Swift when running a build on this swift file in Xcode the user will be taken to a registration page and register their given information to Cunnect.
+ 
+ Getting a UserProfile
+ UserProfileView.swift when running a build on this swift file in Xcode the user will be able to view a users profile page.
+ 
+ Getting posts and making a post
+ FeedView.swift when running a build on this swift file in Code the user will be able to view all posts in a feed page. The user will also be able to make a posts with a caption
