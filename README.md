@@ -13,12 +13,9 @@ If you wish to simulate what our app looks like, the most reliable way is to use
 Backend Overview (Master Branch):
 Our backend is built using django rest framework and python. The database of our backend is configured with sqlite3. The endpoints that the frontend access to our backend is listed below: 
 
-Registration-
-endpoint is accessed to register a new user into our social network
-Posts-
-endpoint is accessed to either get all posts made on the social network or posts a post on the social network
-UserProfile-
-endpoint is accessed to view a given users profile:
+Registration- endpoint is accessed to register a new user into our social network <br>  
+Posts- endpoint is accessed to either get all posts made on the social network or posts a post on the social network  <br>  
+UserProfile- endpoint is accessed to view a given users profile:
 
 To run our backend first git clone the backend repository 
 change the directory to Cunnect_app
