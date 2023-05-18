@@ -9,7 +9,7 @@ There are two codebases for this project. One using Django's REST Framework for 
 NOTE:
 If you wish to simulate what our app looks like, the most reliable way is to use Xcode available primarily through Mac/macOS. 
 
-Backend Overview:
+Backend Overview (Master Branch):
 Our backend is built using django rest framework and python. The database of our backend is configured with sqlite3. The endpoints that the frontend access to our backend is listed below: 
 
 Registration-
@@ -31,7 +31,7 @@ the following url to a backend server will be in the terminal
  
  
  
- Frontend Overview:
+ Frontend Overview (upashna9-UI Branch):
  Our frontend is built using Swift & Xcode. These technologies are required to run our app as shown in the demo. In addition, the django backend server must be running at the same time.
  
  In order to access our apps functionalities you must run a build in Xcode for each swift file.
